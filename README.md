@@ -37,6 +37,9 @@ Open **Firestore Database > Rules**, replace everything with `firestore.rules`, 
 ### 6. Start
 Open the site, choose your name, enter your PIN, confirm the start date, and start the contest. The date and names lock when Day 1 begins.
 
+## Guests
+Send friends the site link with `?guest` on the end, or tap **Share guest link** in the app. Guests see the scores, grid and live updates without a PIN, and can't change anything.
+
 ## After every push
 GitHub Pages can keep serving an old version for several minutes. Test in an incognito window, or hard-refresh with Ctrl+Shift+R (Cmd+Shift+R on Mac).
 

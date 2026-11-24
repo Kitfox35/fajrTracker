@@ -5,30 +5,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>40 Days of Fajr</title>
 <meta name="description" content="Zayd vs. Omar: 40 days of Fajr at the masjid.">
-<meta name="theme-color" content="#070b1f">
+<meta name="theme-color" content="#000000">
 <meta name="color-scheme" content="dark">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Crect width='96' height='96' rx='20' fill='%230c1130'/%3E%3Cpath transform='translate(12 12) scale(.75)' fill='%23f2bd5b' d='M96 48 81.94 62.06V81.94H62.06L48 96 33.94 81.94H14.06V62.06L0 48 14.06 33.94V14.06H33.94L48 0 62.06 14.06H81.94V33.94Z'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Crect width='96' height='96' rx='20' fill='%23160405'/%3E%3Cpath transform='translate(12 12) scale(.75)' fill='%23c9924a' d='M96 48 81.94 62.06V81.94H62.06L48 96 33.94 81.94H14.06V62.06L0 48 14.06 33.94V14.06H33.94L48 0 62.06 14.06H81.94V33.94Z'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --night: #070b1f;
-  --navy: #0c1130;
-  --indigo: #2a2566;
-  --panel: rgb(10 14 40 / .62);
-  --line: rgb(190 198 255 / .14);
-  --text: #f4f1ea;
-  --soft: #c3c8ea;
-  --gold: #f2bd5b;
-  --gold-hi: #ffd88a;
-  --ink: #1d1404;
-  --green: #45cf93;
-  --green-ink: #04241a;
-  --red: #c4415a;
-  --red-text: #ff9aa8;
+  --night: #000;
+  --panel: rgb(22 6 8 / .78);
+  --line: rgb(255 170 160 / .15);
+  --text: #f0dfd8;
+  --soft: #c2a19a;
+  --gold: #c9924a;
+  --gold-hi: #dfae6c;
+  --ink: #140a04;
+  --ember: #7d151c;
+  --green: #3f9d70;
+  --green-ink: #03150d;
+  --red: #b3263a;
+  --red-text: #ff8f92;
   --dawn: .2;
   --ease: cubic-bezier(.16, 1, .3, 1);
   --star: polygon(100% 50%, 85.35% 64.65%, 85.35% 85.35%, 64.65% 85.35%, 50% 100%, 35.35% 85.35%, 14.65% 85.35%, 14.65% 64.65%, 0 50%, 14.65% 35.35%, 14.65% 14.65%, 35.35% 14.65%, 50% 0, 64.65% 14.65%, 85.35% 14.65%, 85.35% 35.35%);
@@ -51,20 +50,20 @@ button:disabled { cursor: not-allowed; }
 
 /* Sky. --dawn runs 0 to 1 as the window goes by, so the horizon brightens. */
 .sky, .sky::before, .sky::after { position: fixed; inset: 0; pointer-events: none; }
-.sky { z-index: -1; background: linear-gradient(180deg, var(--night) 0%, var(--navy) 38%, #1b1c52 72%, var(--indigo) 100%); }
+.sky { z-index: -1; background: linear-gradient(180deg, #000 0%, #060102 45%, #140305 78%, #220609 100%); }
 .sky::before {
   content: ""; opacity: calc(.3 + .5 * var(--dawn)); transition: opacity 2s linear;
-  background: radial-gradient(130% 46% at 50% 106%, #ffb25e 0%, rgb(236 118 92 / .75) 30%, rgb(150 72 128 / .4) 58%, transparent 100%);
+  background: radial-gradient(130% 44% at 50% 106%, #7a1a14 0%, rgb(96 14 18 / .75) 32%, rgb(50 6 12 / .5) 62%, transparent 100%);
 }
 .sky::after {
-  content: ""; opacity: .055;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96'%3E%3Cpath fill='none' stroke='%23f2bd5b' stroke-width='1.5' d='M96 48 81.94 62.06V81.94H62.06L48 96 33.94 81.94H14.06V62.06L0 48 14.06 33.94V14.06H33.94L48 0 62.06 14.06H81.94V33.94Z'/%3E%3C/svg%3E") center top / 96px;
+  content: ""; opacity: .09;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96'%3E%3Cpath fill='none' stroke='%23c4463f' stroke-width='1.5' d='M96 48 81.94 62.06V81.94H62.06L48 96 33.94 81.94H14.06V62.06L0 48 14.06 33.94V14.06H33.94L48 0 62.06 14.06H81.94V33.94Z'/%3E%3C/svg%3E") center top / 96px;
   -webkit-mask: linear-gradient(#000 30%, transparent 90%); mask: linear-gradient(#000 30%, transparent 90%);
 }
 
 .stakes {
   padding: calc(10px + env(safe-area-inset-top)) 16px 10px; text-align: center;
-  background: var(--gold); color: var(--ink); font-weight: 600;
+  background: #3a090d; color: var(--text); font-weight: 600;
 }
 main {
   width: 100%; max-width: 500px; margin: 0 auto;
@@ -75,7 +74,7 @@ main > * { min-width: 0; }
 .topline { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
 h1 { font-size: 1.25rem; font-weight: 600; letter-spacing: -.01em; }
 .sync { display: inline-flex; align-items: center; gap: 7px; font-size: .875rem; color: var(--soft); white-space: nowrap; }
-.sync::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #8087b5; }
+.sync::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #8a6f6a; }
 .sync.live::before { background: var(--green); }
 .sync.down { color: var(--red-text); }
 .sync.down::before { background: var(--red-text); }
@@ -96,12 +95,12 @@ h1 { font-size: 1.25rem; font-weight: 600; letter-spacing: -.01em; }
   width: 100%; min-height: 120px; padding: 18px 20px; border: 0; border-radius: 20px;
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
   font-size: 1.375rem; line-height: 1.2; font-weight: 600; text-wrap: balance; text-align: center;
-  background: linear-gradient(180deg, var(--gold-hi), var(--gold)); color: var(--ink);
-  box-shadow: 0 10px 28px rgb(0 0 0 / .35), inset 0 1px 0 rgb(255 255 255 / .5);
+  background: linear-gradient(180deg, #8f1a22, var(--ember)); color: #ffe9df;
+  box-shadow: 0 10px 28px rgb(0 0 0 / .5), inset 0 1px 0 rgb(255 200 190 / .22);
   transition: transform .18s var(--ease), filter .18s;
 }
 .big small { font-size: .9375rem; font-weight: 500; }
-.big:hover:not(:disabled) { filter: brightness(1.05); }
+.big:hover:not(:disabled) { filter: brightness(1.12); }
 .big:active:not(:disabled) { transform: scale(.975); }
 .big:disabled {
   background: var(--panel); color: var(--text);
@@ -110,15 +109,15 @@ h1 { font-size: 1.25rem; font-weight: 600; letter-spacing: -.01em; }
 .big:disabled small { color: var(--soft); order: -1; }
 .slot.other .big { min-height: 72px; font-size: 1.125rem; padding: 12px 16px; border-radius: 16px; }
 .slot.other .big:not(:disabled) {
-  background: var(--panel); color: var(--gold-hi); box-shadow: inset 0 0 0 1.5px var(--gold);
+  background: var(--panel); color: var(--text); box-shadow: inset 0 0 0 1.5px #a32a33;
 }
 .result { border-radius: 20px; padding: 18px 20px; background: var(--panel); box-shadow: inset 0 0 0 1px var(--line); display: flex; align-items: center; gap: 14px; min-height: 72px; }
 .result svg { flex: none; width: 34px; height: 34px; }
 .result div { flex: 1; min-width: 0; }
 .result strong { display: block; font-weight: 600; font-size: 1.125rem; line-height: 1.25; overflow-wrap: anywhere; }
 .result span { color: var(--soft); font-size: .9375rem; }
-.result.made { background: rgb(22 92 68 / .72); box-shadow: inset 0 0 0 1px rgb(69 207 147 / .5); }
-.result.made span { color: #c9f2df; }
+.result.made { background: rgb(10 44 30 / .85); box-shadow: inset 0 0 0 1px rgb(63 157 112 / .5); }
+.result.made span { color: #a9d3be; }
 .slot.mine .result { min-height: 104px; }
 .slot.mine .result strong { font-size: 1.375rem; }
 .ghost {
@@ -136,19 +135,20 @@ h1 { font-size: 1.25rem; font-weight: 600; letter-spacing: -.01em; }
 .choices { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
 .choices button, .primary {
   min-height: 64px; border: 0; border-radius: 16px; font-weight: 600; font-size: 1.125rem;
-  background: var(--gold); color: var(--ink); padding: 8px 12px; overflow-wrap: anywhere;
+  background: var(--ember); color: #ffe9df; padding: 8px 12px; overflow-wrap: anywhere;
 }
-.choices button:hover, .primary:hover:not(:disabled) { background: var(--gold-hi); }
+.choices button:hover, .primary:hover:not(:disabled) { background: #98202a; }
 .choices button:active, .primary:active:not(:disabled) { transform: scale(.98); }
 .primary:disabled { opacity: .6; }
+.watch { width: 100%; margin-top: 12px; }
 form { display: grid; gap: 16px; margin-top: 18px; }
 label { display: grid; gap: 6px; font-weight: 500; }
 input {
   width: 100%; min-width: 0; min-height: 52px; padding: 0 14px; border-radius: 14px; font-size: 1.0625rem;
-  border: 1.5px solid rgb(190 198 255 / .3); background: rgb(7 11 31 / .75); color-scheme: dark; caret-color: var(--gold);
+  border: 1.5px solid rgb(255 170 160 / .32); background: rgb(0 0 0 / .7); color-scheme: dark; caret-color: var(--gold);
   -webkit-appearance: none; appearance: none;
 }
-input:focus { border-color: var(--gold); outline: none; box-shadow: 0 0 0 2px rgb(242 189 91 / .4); }
+input:focus { border-color: var(--gold); outline: none; box-shadow: 0 0 0 2px rgb(201 146 74 / .4); }
 
 /* Final result */
 .final { text-align: center; padding: 30px 20px; }
@@ -174,8 +174,8 @@ dd { font-weight: 600; }
 .grids h2 { font-size: 1.125rem; font-weight: 600; margin-bottom: 10px; overflow-wrap: anywhere; }
 .grid { display: grid; grid-template-columns: repeat(8, 1fr); list-style: none; margin: 0; padding: 0; }
 .cell { position: relative; aspect-ratio: 1; clip-path: var(--star); display: grid; place-items: center; }
-.cell::before { content: ""; position: absolute; inset: 1px; clip-path: var(--star); background: #464b61; transition: background-color .4s; }
-.cell span { position: relative; font-size: .875rem; font-weight: 600; color: #e3e5f0; }
+.cell::before { content: ""; position: absolute; inset: 1px; clip-path: var(--star); background: #3c3735; transition: background-color .4s; }
+.cell span { position: relative; font-size: .875rem; font-weight: 600; color: #d8ccc7; }
 .cell.made::before { background: var(--green); }
 .cell.made span { color: var(--green-ink); }
 .cell.missed::before { background: var(--red); }
@@ -184,19 +184,19 @@ dd { font-weight: 600; }
 .cell.today::before { inset: 4px; }
 .legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 18px; font-size: .9375rem; color: var(--text); }
 .legend span { display: inline-flex; align-items: center; gap: 7px; }
-.legend i { width: 16px; height: 16px; clip-path: var(--star); background: #7b8099; }
+.legend i { width: 16px; height: 16px; clip-path: var(--star); background: #7d7471; }
 .legend .l-made { background: var(--green); } .legend .l-missed { background: var(--red); } .legend .l-today { background: var(--gold-hi); }
 
 footer { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
-footer .ghost { background: rgb(7 11 31 / .55); }
+footer .ghost { background: rgb(0 0 0 / .6); }
 
 /* PIN pad */
 dialog {
   border: 0; padding: 24px 20px calc(20px + env(safe-area-inset-bottom)); width: min(360px, calc(100vw - 32px));
-  border-radius: 24px; background: #121740; color: var(--text); text-align: center;
+  border-radius: 24px; background: #160608; color: var(--text); text-align: center;
   box-shadow: 0 24px 60px rgb(0 0 0 / .5), inset 0 0 0 1px var(--line);
 }
-dialog::backdrop { background: rgb(4 6 18 / .78); }
+dialog::backdrop { background: rgb(0 0 0 / .84); }
 dialog h2 { font-size: 1.25rem; font-weight: 600; overflow-wrap: anywhere; }
 .dots { display: flex; justify-content: center; gap: 16px; margin: 18px 0 8px; }
 .dots i { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--soft); }
@@ -204,16 +204,16 @@ dialog h2 { font-size: 1.25rem; font-weight: 600; overflow-wrap: anywhere; }
 .dots.wrong { animation: shake .4s; }
 .pinmsg { min-height: 1.5em; color: var(--red-text); font-size: .9375rem; }
 .keys { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 8px; }
-.keys button { min-height: 62px; border: 0; border-radius: 16px; font-size: 1.5rem; font-weight: 500; background: rgb(190 198 255 / .12); }
+.keys button { min-height: 62px; border: 0; border-radius: 16px; font-size: 1.5rem; font-weight: 500; background: rgb(255 170 160 / .11); }
 .keys button.word { font-size: 1rem; background: transparent; color: var(--soft); }
-.keys button:hover { background: rgb(190 198 255 / .2); }
-.keys button:active { background: var(--gold); color: var(--ink); }
+.keys button:hover { background: rgb(255 170 160 / .19); }
+.keys button:active { background: var(--ember); color: #ffe9df; }
 @keyframes shake { 20%, 60% { transform: translateX(-8px); } 40%, 80% { transform: translateX(8px); } }
 
 /* Toasts */
 #toasts { position: fixed; z-index: 20; left: 16px; right: 16px; bottom: calc(18px + env(safe-area-inset-bottom)); display: grid; gap: 10px; justify-items: center; pointer-events: none; }
-.toast { max-width: 440px; padding: 14px 20px; border-radius: 16px; background: #fff3dc; color: #221704; font-weight: 600; box-shadow: 0 12px 34px rgb(0 0 0 / .45); animation: rise .45s var(--ease); transition: opacity .3s, transform .3s; overflow-wrap: anywhere; }
-.toast.bad { background: #ffd9de; color: #480914; }
+.toast { max-width: 440px; padding: 14px 20px; border-radius: 16px; background: #4a0d12; color: #ffe9df; font-weight: 600; box-shadow: 0 12px 34px rgb(0 0 0 / .45); animation: rise .45s var(--ease); transition: opacity .3s, transform .3s; overflow-wrap: anywhere; }
+.toast.bad { background: #1c1514; color: var(--red-text); box-shadow: inset 0 0 0 1.5px var(--red); }
 .toast.out { opacity: 0; transform: translateY(8px); }
 @keyframes rise { from { transform: translateY(24px); opacity: .2; } }
 #confetti { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 15; }
@@ -258,12 +258,12 @@ dialog h2 { font-size: 1.25rem; font-weight: 600; overflow-wrap: anywhere; }
     <svg class="arc" viewBox="0 0 320 104" aria-hidden="true">
       <defs>
         <clipPath id="above"><rect x="-20" y="-30" width="360" height="110"/></clipPath>
-        <radialGradient id="sunfill"><stop offset="0" stop-color="#fff4d6"/><stop offset="1" stop-color="#f2bd5b"/></radialGradient>
+        <radialGradient id="sunfill"><stop offset="0" stop-color="#e8a868"/><stop offset="1" stop-color="#b8402c"/></radialGradient>
       </defs>
-      <path d="M40 80Q160 -44 280 80" fill="none" stroke="#bec6ff" stroke-opacity=".28" stroke-width="2" stroke-dasharray="2 6" stroke-linecap="round"/>
-      <path id="trail" d="M40 80Q160 -44 280 80" pathLength="100" fill="none" stroke="#f2bd5b" stroke-width="3" stroke-dasharray="0 200"/>
-      <g clip-path="url(#above)"><g id="sun"><circle r="22" fill="#f2bd5b" opacity=".2"/><circle r="12" fill="url(#sunfill)"/></g></g>
-      <line x1="0" y1="80" x2="320" y2="80" stroke="#bec6ff" stroke-opacity=".4" stroke-width="1.5"/>
+      <path d="M40 80Q160 -44 280 80" fill="none" stroke="#e0a49a" stroke-opacity=".34" stroke-width="2" stroke-dasharray="2 6" stroke-linecap="round"/>
+      <path id="trail" d="M40 80Q160 -44 280 80" pathLength="100" fill="none" stroke="#b8402c" stroke-width="3" stroke-dasharray="0 200"/>
+      <g clip-path="url(#above)"><g id="sun"><circle r="22" fill="#b8402c" opacity=".28"/><circle r="12" fill="url(#sunfill)"/></g></g>
+      <line x1="0" y1="80" x2="320" y2="80" stroke="#e0a49a" stroke-opacity=".4" stroke-width="1.5"/>
       <text id="openLabel" x="40" y="99" text-anchor="middle"></text>
       <text id="closeLabel" x="280" y="99" text-anchor="middle"></text>
     </svg>
@@ -276,6 +276,7 @@ dialog h2 { font-size: 1.25rem; font-weight: 600; overflow-wrap: anywhere; }
       <h2>Who's using this device?</h2>
       <p>Enter your PIN once. This device stays signed in.</p>
       <div class="choices" id="whoChoices"></div>
+      <button class="ghost watch" id="watchBtn" type="button">Just watching</button>
     </div>
     <div class="card" id="setupCard" hidden>
       <h2 id="setupTitle"></h2>
@@ -305,6 +306,7 @@ dialog h2 { font-size: 1.25rem; font-weight: 600; overflow-wrap: anywhere; }
   </section>
 
   <footer>
+    <button class="ghost" id="shareBtn" type="button" hidden>Share guest link</button>
     <button class="ghost" id="switchBtn" type="button" hidden></button>
     <button class="ghost" id="editBtn" type="button" hidden>Edit start date or names</button>
   </footer>
@@ -419,6 +421,15 @@ let editing = false;
 let celebrated = false;
 let me = null;               // who is signed in on this device (Firebase remembers the login)
 let authReady = false;
+let watching = false;        // guest mode: sees everything, changes nothing
+const GUEST_KEY = "fajr40:guest";   // remembers guest mode on this device, no contest data
+try { watching = localStorage.getItem(GUEST_KEY) === "1"; } catch {}
+if (new URLSearchParams(location.search).has("guest")) setWatching(true);
+const isGuest = () => watching && !me;
+function setWatching(on) {
+  watching = on;
+  try { on ? localStorage.setItem(GUEST_KEY, "1") : localStorage.removeItem(GUEST_KEY); } catch {}
+}
 const saving = { zayd: false, omar: false };
 
 const nameOf = (id) => contest?.players?.[id] || PLAYERS[id].name;
@@ -476,11 +487,11 @@ function mark(kind) {
   svg.setAttribute("aria-hidden", "true");
   const circle = document.createElementNS(ns, "circle");
   circle.setAttribute("cx", "17"); circle.setAttribute("cy", "17"); circle.setAttribute("r", "17");
-  circle.setAttribute("fill", kind === "made" ? "#45cf93" : "#c4415a");
+  circle.setAttribute("fill", { made: "#3f9d70", missed: "#b3263a", waiting: "#4b4442" }[kind]);
   const path = document.createElementNS(ns, "path");
-  path.setAttribute("d", kind === "made" ? "M10 17.5l5 5 9.5-10.5" : "M11.5 11.5l11 11m0-11l-11 11");
+  path.setAttribute("d", { made: "M10 17.5l5 5 9.5-10.5", missed: "M11.5 11.5l11 11m0-11l-11 11", waiting: "M17 10v7.5l5 3" }[kind]);
   path.setAttribute("fill", "none");
-  path.setAttribute("stroke", kind === "made" ? "#04241a" : "#fff");
+  path.setAttribute("stroke", kind === "made" ? "#03150d" : "#f3e3dc");
   path.setAttribute("stroke-width", "3.2");
   path.setAttribute("stroke-linecap", "round"); path.setAttribute("stroke-linejoin", "round");
   svg.append(circle, path);
@@ -556,13 +567,14 @@ function render() {
   $("status").hidden = !!contest && t.phase === "finished";
   $("final").hidden = t.phase !== "finished";
   $("main").classList.toggle("wide", !contest || t.phase === "finished");
-  $("whoCard").hidden = !(loaded && authReady && !me && t.phase !== "finished");
+  $("whoCard").hidden = !(loaded && authReady && !me && !watching && t.phase !== "finished");
   $("setupCard").hidden = !(loaded && me && (!contest || editing));
   $("slots").hidden = !active || editing;
   $("checkins").hidden = $("whoCard").hidden && $("setupCard").hidden && $("slots").hidden;
   $("editBtn").hidden = !(contest && me && t.phase === "upcoming" && !editing);
-  $("switchBtn").hidden = !me;
-  if (me) setText($("switchBtn"), `You're ${nameOf(me)}. Switch player`);
+  $("switchBtn").hidden = !authReady || !(me || watching);
+  setText($("switchBtn"), me ? `You're ${nameOf(me)}. Switch player` : "You're watching as a guest. Sign in");
+  $("shareBtn").hidden = !contest;
 
   if (editing && t.phase !== "upcoming") editing = false;   // Day 1 began mid-edit
 
@@ -682,19 +694,25 @@ function tickSlot(id, t, open) {
   const missed = t.phase === "after" && !done;
 
   // Result panel replaces the button once today is settled for this player.
-  u.result.hidden = !(done || missed) || saving[id];
+  u.result.hidden = !(done || missed || isGuest()) || saving[id];
   u.button.hidden = !u.result.hidden;
   if (!u.result.hidden) {
-    const kind = done ? "made" : "missed";
+    const kind = done ? "made" : missed ? "missed" : "waiting";
     u.result.classList.toggle("made", done);
     if (u.iconBox.dataset.kind !== kind) { u.iconBox.dataset.kind = kind; u.iconBox.replaceChildren(mark(kind)); }
+    if (kind === "waiting") {
+      setText(u.resultTitle, open ? `${nameOf(id)} hasn't checked in yet` : nameOf(id));
+      setText(u.resultSub, open ? `${longSpan(t.closeAt - t.now)} left` : `Check-in opens in ${clockSpan(t.nextOpen - t.now)}`);
+      u.undo.hidden = true;
+      return;
+    }
     setText(u.resultTitle, done
       ? (mine ? "You made it" : `${nameOf(id)} made it`)
       : (mine ? "You missed today" : `${nameOf(id)} missed today`));
     const next = t.nextOpen && t.day < TOTAL_DAYS ? `Next check-in in ${clockSpan(t.nextOpen - t.now)}` : "";
     setText(u.resultSub, done ? `at ${timeFormat.format(stampOf(id, t.today))}${next && mine ? `. ${next}` : ""}` : next);
     const undoLeft = done && open ? Math.min(stampOf(id, t.today) + UNDO_MS, t.closeAt) - t.now : 0;
-    u.undo.hidden = !(undoLeft > 0);
+    u.undo.hidden = isGuest() || !(undoLeft > 0);
     if (undoLeft > 0) setText(u.undo, `Undo ${clockSpan(Math.min(undoLeft, UNDO_MS)).slice(4)}`);
     return;
   }
@@ -806,12 +824,25 @@ async function identify(id) {
 
 $("switchBtn").addEventListener("click", async () => {
   editing = false;
-  await signOut(auth);
+  setWatching(false);
+  if (me) await signOut(auth); else render();
   $("whoCard").scrollIntoView({ block: "center" });
 });
 
+$("watchBtn").addEventListener("click", () => { setWatching(true); render(); });
+
+$("shareBtn").addEventListener("click", async () => {
+  const url = `${location.origin}${location.pathname}?guest`;
+  try {
+    if (navigator.share) await navigator.share({ title: "40 Days of Fajr", url });
+    else { await navigator.clipboard.writeText(url); toast("Guest link copied."); }
+  } catch (err) {
+    if (err.name !== "AbortError") toast(`Couldn't share. The guest link is ${url}`, true);
+  }
+});
+
 function checkIn(id) {
-  if (saving[id]) return;
+  if (saving[id] || isGuest()) return;
   return withLogin(id, async (ref) => {
     const t = timeline(Date.now());   // re-check: the PIN pad may have been open across 6:40
     if (t.phase !== "open") return toast("The check-in window is closed.", true);
@@ -824,7 +855,7 @@ function checkIn(id) {
 }
 
 function undo(id) {
-  if (saving[id]) return;
+  if (saving[id] || isGuest()) return;
   return withLogin(id, async (ref) => {
     const t = timeline(Date.now());
     const limit = Math.min(stampOf(id, t.today) + UNDO_MS, t.closeAt);
@@ -896,7 +927,7 @@ function confetti() {
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   const canvas = $("confetti"), g = canvas.getContext("2d");
   const w = canvas.width = innerWidth, h = canvas.height = innerHeight;
-  const colors = ["#f2bd5b", "#ffd88a", "#ff9c6b", "#45cf93", "#f4f1ea"];
+  const colors = ["#c9924a", "#b3263a", "#e06a4a", "#3f9d70", "#dfae6c"];
   const bits = Array.from({ length: 110 }, () => ({
     x: w / 2 + (Math.random() - .5) * 160, y: h * .55,
     vx: (Math.random() - .5) * 11, vy: -7 - Math.random() * 10,
