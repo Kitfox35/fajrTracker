@@ -20,7 +20,7 @@ service cloud.firestore {
 
     function isSignedInAs(player) {
       return request.auth != null
-        && request.auth.token.email == player + '@fajr40.example.com';
+        && request.auth.token.email == player + '@fajr.com';
     }
 
     function isPlayer() { return isSignedInAs('zayd') || isSignedInAs('omar'); }

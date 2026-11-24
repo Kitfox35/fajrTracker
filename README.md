@@ -16,8 +16,8 @@ No secrets live in this repo. PINs are checked by Firebase Authentication. The F
 
 | Email | Password |
 |---|---|
-| `zayd@fajr40.example.com` | Zayd's 6-digit PIN |
-| `omar@fajr40.example.com` | Omar's 6-digit PIN |
+| `zayd@fajr.com` | Zayd's 6-digit PIN |
+| `omar@fajr.com` | Omar's 6-digit PIN |
 
 3. Under **Settings > User actions**, turn off **Enable create (sign-up)**.
 
