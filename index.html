@@ -314,7 +314,7 @@ dialog h2 { font-size: 1.25rem; font-weight: 600; overflow-wrap: anywhere; }
 
 <dialog id="pinDialog" aria-labelledby="pinTitle">
   <h2 id="pinTitle"></h2>
-  <div class="dots" id="pinDots" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  <div class="dots" id="pinDots" aria-hidden="true"></div>
   <p class="pinmsg" id="pinMsg" role="status"></p>
   <div class="keys" id="pinKeys"></div>
 </dialog>
@@ -344,7 +344,7 @@ const PLAYERS = {               // No PINs here. Firebase Authentication checks 
   zayd: { name: "Zayd", login: "zayd@fajr40.example.com" },
   omar: { name: "Omar", login: "omar@fajr40.example.com" }
 };
-const PIN_SUFFIX = "-fajr40";   // Not a secret. Firebase needs 6+ characters, so the password is PIN + this.
+const PIN_LENGTH = 6;           // Each player's Firebase password is their PIN.
 /* ===== END CONFIG ===== */
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
@@ -729,6 +729,7 @@ function tickSlot(id, t, open) {
 }
 
 /* ---------- PIN pad ---------- */
+for (let i = 0; i < PIN_LENGTH; i++) $("pinDots").append(el("i"));
 const pin = { value: "", verify: null, resolve: null, busy: false };
 
 for (const k of ["1", "2", "3", "4", "5", "6", "7", "8", "9", "Cancel", "0", "Delete"]) {
@@ -761,12 +762,12 @@ function closePin(ok) {
 function drawDots() { [...$("pinDots").children].forEach((d, i) => d.classList.toggle("on", i < pin.value.length)); }
 function pinBack() { if (pin.busy) return; pin.value = pin.value.slice(0, -1); drawDots(); }
 async function pinDigit(d) {
-  if (pin.busy || pin.value.length >= 4) return;
+  if (pin.busy || pin.value.length >= PIN_LENGTH) return;
   pin.value += d;
   $("pinDots").classList.remove("wrong");
   setText($("pinMsg"), "");
   drawDots();
-  if (pin.value.length < 4) return;
+  if (pin.value.length < PIN_LENGTH) return;
   const attempt = pin.resolve;
   pin.busy = true;
   setText($("pinMsg"), "Checking");
@@ -780,8 +781,9 @@ async function pinDigit(d) {
   $("pinDots").classList.add("wrong");
   setText($("pinMsg"), problem);
 }
+const WRONG_PIN = ["auth/invalid-credential", "auth/wrong-password", "auth/user-not-found", "auth/invalid-login-credentials"];
 function loginProblem(code) {
-  if (["auth/invalid-credential", "auth/wrong-password", "auth/user-not-found", "auth/invalid-login-credentials"].includes(code))
+  if (WRONG_PIN.includes(code))
     return "That PIN doesn't match. Try again.";
   if (code === "auth/too-many-requests") return "Too many tries. Wait a few minutes.";
   if (code === "auth/network-request-failed") return "No connection. Try again.";
@@ -793,7 +795,15 @@ function loginProblem(code) {
 /* ---------- Logins ---------- */
 let auth = null, guestAuth = null, guestRef = null;
 
-const signIn = (on, id, digits) => signInWithEmailAndPassword(on, PLAYERS[id].login, digits + PIN_SUFFIX);
+// Plain PIN first. Also accepts the earlier setup, where the password was PIN + "-fajr40".
+async function signIn(on, id, digits) {
+  const login = PLAYERS[id].login;
+  try { return await signInWithEmailAndPassword(on, login, digits); }
+  catch (err) {
+    if (!WRONG_PIN.includes(err.code)) throw err;
+    return signInWithEmailAndPassword(on, login, `${digits}-fajr40`);
+  }
+}
 
 // The other player can check in on this device without replacing its owner's login.
 async function withLogin(id, action) {

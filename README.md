@@ -12,16 +12,16 @@ No secrets live in this repo. PINs are checked by Firebase Authentication. The F
 
 ### 2. Logins
 1. Open **Authentication**, click **Get started**, and enable **Email/Password** (not email link).
-2. On the **Users** tab, add both players. The password is a 4-digit PIN followed by `-fajr40`.
+2. On the **Users** tab, add both players. The password is a 6-digit PIN.
 
 | Email | Password |
 |---|---|
-| `zayd@fajr40.example.com` | Zayd's PIN + `-fajr40` |
-| `omar@fajr40.example.com` | Omar's PIN + `-fajr40` |
+| `zayd@fajr40.example.com` | Zayd's 6-digit PIN |
+| `omar@fajr40.example.com` | Omar's 6-digit PIN |
 
 3. Under **Settings > User actions**, turn off **Enable create (sign-up)**.
 
-In the app you only type the 4 digits. To change a PIN, delete that user and add it again.
+To change a PIN, delete that user and add it again.
 
 ### 3. Rules
 Open **Firestore Database > Rules**, replace everything with `firestore.rules`, and click **Publish**.
