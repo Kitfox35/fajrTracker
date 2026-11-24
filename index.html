@@ -1,0 +1,1004 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>40 Days of Fajr</title>
+<meta name="description" content="Zayd vs. Omar: 40 days of Fajr at the masjid.">
+<meta name="theme-color" content="#070b1f">
+<meta name="color-scheme" content="dark">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Crect width='96' height='96' rx='20' fill='%230c1130'/%3E%3Cpath transform='translate(12 12) scale(.75)' fill='%23f2bd5b' d='M96 48 81.94 62.06V81.94H62.06L48 96 33.94 81.94H14.06V62.06L0 48 14.06 33.94V14.06H33.94L48 0 62.06 14.06H81.94V33.94Z'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --night: #070b1f;
+  --navy: #0c1130;
+  --indigo: #2a2566;
+  --panel: rgb(10 14 40 / .62);
+  --line: rgb(190 198 255 / .14);
+  --text: #f4f1ea;
+  --soft: #c3c8ea;
+  --gold: #f2bd5b;
+  --gold-hi: #ffd88a;
+  --ink: #1d1404;
+  --green: #45cf93;
+  --green-ink: #04241a;
+  --red: #c4415a;
+  --red-text: #ff9aa8;
+  --dawn: .2;
+  --ease: cubic-bezier(.16, 1, .3, 1);
+  --star: polygon(100% 50%, 85.35% 64.65%, 85.35% 85.35%, 64.65% 85.35%, 50% 100%, 35.35% 85.35%, 14.65% 85.35%, 14.65% 64.65%, 0 50%, 14.65% 35.35%, 14.65% 14.65%, 35.35% 14.65%, 50% 0, 64.65% 14.65%, 85.35% 14.65%, 85.35% 35.35%);
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { background: var(--night); -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; min-height: 100dvh; color: var(--text);
+  font: 400 1rem/1.45 Outfit, system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
+  -webkit-tap-highlight-color: transparent;
+}
+::selection { background: var(--gold); color: var(--ink); }
+:focus-visible { outline: 3px solid var(--gold-hi); outline-offset: 3px; }
+h1, h2, p, dl, dd { margin: 0; }
+button, input { font: inherit; color: inherit; }
+button { cursor: pointer; touch-action: manipulation; }
+button:disabled { cursor: not-allowed; }
+
+/* Sky. --dawn runs 0 to 1 as the window goes by, so the horizon brightens. */
+.sky, .sky::before, .sky::after { position: fixed; inset: 0; pointer-events: none; }
+.sky { z-index: -1; background: linear-gradient(180deg, var(--night) 0%, var(--navy) 38%, #1b1c52 72%, var(--indigo) 100%); }
+.sky::before {
+  content: ""; opacity: calc(.3 + .5 * var(--dawn)); transition: opacity 2s linear;
+  background: radial-gradient(130% 46% at 50% 106%, #ffb25e 0%, rgb(236 118 92 / .75) 30%, rgb(150 72 128 / .4) 58%, transparent 100%);
+}
+.sky::after {
+  content: ""; opacity: .055;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96'%3E%3Cpath fill='none' stroke='%23f2bd5b' stroke-width='1.5' d='M96 48 81.94 62.06V81.94H62.06L48 96 33.94 81.94H14.06V62.06L0 48 14.06 33.94V14.06H33.94L48 0 62.06 14.06H81.94V33.94Z'/%3E%3C/svg%3E") center top / 96px;
+  -webkit-mask: linear-gradient(#000 30%, transparent 90%); mask: linear-gradient(#000 30%, transparent 90%);
+}
+
+.stakes {
+  padding: calc(10px + env(safe-area-inset-top)) 16px 10px; text-align: center;
+  background: var(--gold); color: var(--ink); font-weight: 600;
+}
+main {
+  width: 100%; max-width: 500px; margin: 0 auto;
+  padding: 18px 16px calc(36px + env(safe-area-inset-bottom));
+  display: grid; gap: 28px;
+}
+main > * { min-width: 0; }
+.topline { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+h1 { font-size: 1.25rem; font-weight: 600; letter-spacing: -.01em; }
+.sync { display: inline-flex; align-items: center; gap: 7px; font-size: .875rem; color: var(--soft); white-space: nowrap; }
+.sync::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #8087b5; }
+.sync.live::before { background: var(--green); }
+.sync.down { color: var(--red-text); }
+.sync.down::before { background: var(--red-text); }
+
+/* Status */
+.status { text-align: center; }
+.arc { display: block; width: 100%; max-width: 420px; margin: 10px auto 0; overflow: visible; }
+.arc text { fill: var(--soft); font: 500 13px Outfit, system-ui, sans-serif; }
+#sun { transform: translate(40px, 80px); transition: opacity .6s; }
+#statusText { font-size: 1.4375rem; line-height: 1.2; font-weight: 600; letter-spacing: -.015em; text-wrap: balance; margin-top: 10px; }
+#statusText.open { color: var(--gold-hi); }
+.daycount { color: var(--soft); margin-top: 6px; font-size: 1.0625rem; }
+.daycount b { color: var(--text); font-weight: 600; }
+
+/* Check-in */
+.checkins { display: grid; gap: 12px; }
+.big {
+  width: 100%; min-height: 120px; padding: 18px 20px; border: 0; border-radius: 20px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+  font-size: 1.375rem; line-height: 1.2; font-weight: 600; text-wrap: balance; text-align: center;
+  background: linear-gradient(180deg, var(--gold-hi), var(--gold)); color: var(--ink);
+  box-shadow: 0 10px 28px rgb(0 0 0 / .35), inset 0 1px 0 rgb(255 255 255 / .5);
+  transition: transform .18s var(--ease), filter .18s;
+}
+.big small { font-size: .9375rem; font-weight: 500; }
+.big:hover:not(:disabled) { filter: brightness(1.05); }
+.big:active:not(:disabled) { transform: scale(.975); }
+.big:disabled {
+  background: var(--panel); color: var(--text);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.big:disabled small { color: var(--soft); order: -1; }
+.slot.other .big { min-height: 72px; font-size: 1.125rem; padding: 12px 16px; border-radius: 16px; }
+.slot.other .big:not(:disabled) {
+  background: var(--panel); color: var(--gold-hi); box-shadow: inset 0 0 0 1.5px var(--gold);
+}
+.result { border-radius: 20px; padding: 18px 20px; background: var(--panel); box-shadow: inset 0 0 0 1px var(--line); display: flex; align-items: center; gap: 14px; min-height: 72px; }
+.result svg { flex: none; width: 34px; height: 34px; }
+.result div { flex: 1; min-width: 0; }
+.result strong { display: block; font-weight: 600; font-size: 1.125rem; line-height: 1.25; overflow-wrap: anywhere; }
+.result span { color: var(--soft); font-size: .9375rem; }
+.result.made { background: rgb(22 92 68 / .72); box-shadow: inset 0 0 0 1px rgb(69 207 147 / .5); }
+.result.made span { color: #c9f2df; }
+.slot.mine .result { min-height: 104px; }
+.slot.mine .result strong { font-size: 1.375rem; }
+.ghost {
+  min-height: 48px; padding: 0 16px; border-radius: 14px; background: transparent;
+  border: 1.5px solid rgb(244 241 234 / .4); font-weight: 600; white-space: nowrap;
+}
+.ghost:hover { border-color: var(--gold); color: var(--gold-hi); }
+.ghost:active { background: rgb(255 255 255 / .08); }
+.note { color: var(--soft); font-size: .9375rem; text-align: center; }
+.note.bad { color: var(--red-text); }
+
+.card { border-radius: 20px; padding: 20px; background: var(--panel); box-shadow: inset 0 0 0 1px var(--line); }
+.card h2 { font-size: 1.25rem; font-weight: 600; line-height: 1.25; text-wrap: balance; }
+.card p { color: var(--soft); margin-top: 6px; overflow-wrap: anywhere; }
+.choices { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+.choices button, .primary {
+  min-height: 64px; border: 0; border-radius: 16px; font-weight: 600; font-size: 1.125rem;
+  background: var(--gold); color: var(--ink); padding: 8px 12px; overflow-wrap: anywhere;
+}
+.choices button:hover, .primary:hover:not(:disabled) { background: var(--gold-hi); }
+.choices button:active, .primary:active:not(:disabled) { transform: scale(.98); }
+.primary:disabled { opacity: .6; }
+form { display: grid; gap: 16px; margin-top: 18px; }
+label { display: grid; gap: 6px; font-weight: 500; }
+input {
+  width: 100%; min-width: 0; min-height: 52px; padding: 0 14px; border-radius: 14px; font-size: 1.0625rem;
+  border: 1.5px solid rgb(190 198 255 / .3); background: rgb(7 11 31 / .75); color-scheme: dark; caret-color: var(--gold);
+  -webkit-appearance: none; appearance: none;
+}
+input:focus { border-color: var(--gold); outline: none; box-shadow: 0 0 0 2px rgb(242 189 91 / .4); }
+
+/* Final result */
+.final { text-align: center; padding: 30px 20px; }
+.final h2 { font-size: 2.25rem; line-height: 1.1; letter-spacing: -.025em; color: var(--gold-hi); }
+.final p { font-size: 1.25rem; color: var(--text); margin-top: 12px; text-wrap: balance; }
+
+/* Scoreboard */
+.leader { text-align: center; font-size: 1.25rem; font-weight: 600; margin-bottom: 14px; text-wrap: balance; overflow-wrap: anywhere; }
+.board { display: grid; grid-template-columns: 1fr 1fr; background: var(--panel); border-radius: 20px; box-shadow: inset 0 0 0 1px var(--line); }
+.side { padding: 18px 16px 16px; text-align: center; min-width: 0; }
+.side + .side { box-shadow: -1px 0 0 var(--line); }
+.side h2 { font-size: 1.125rem; font-weight: 600; overflow-wrap: anywhere; }
+.points { font-size: 4.5rem; line-height: 1; font-weight: 700; letter-spacing: -.035em; margin: 4px 0; }
+.side.ahead .points, .side.ahead h2 { color: var(--gold-hi); }
+.outof { color: var(--soft); }
+.side dl { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); display: grid; gap: 4px; }
+.side dl div { display: flex; justify-content: space-between; gap: 8px; }
+dt { color: var(--soft); }
+dd { font-weight: 600; }
+
+/* Grids: eight-point stars tiling edge to edge */
+.grids { display: grid; gap: 22px; }
+.grids h2 { font-size: 1.125rem; font-weight: 600; margin-bottom: 10px; overflow-wrap: anywhere; }
+.grid { display: grid; grid-template-columns: repeat(8, 1fr); list-style: none; margin: 0; padding: 0; }
+.cell { position: relative; aspect-ratio: 1; clip-path: var(--star); display: grid; place-items: center; }
+.cell::before { content: ""; position: absolute; inset: 1px; clip-path: var(--star); background: #464b61; transition: background-color .4s; }
+.cell span { position: relative; font-size: .875rem; font-weight: 600; color: #e3e5f0; }
+.cell.made::before { background: var(--green); }
+.cell.made span { color: var(--green-ink); }
+.cell.missed::before { background: var(--red); }
+.cell.missed span { color: #fff; text-decoration: line-through; text-decoration-thickness: 2px; }
+.cell.today { background: var(--gold-hi); }
+.cell.today::before { inset: 4px; }
+.legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 18px; font-size: .9375rem; color: var(--text); }
+.legend span { display: inline-flex; align-items: center; gap: 7px; }
+.legend i { width: 16px; height: 16px; clip-path: var(--star); background: #7b8099; }
+.legend .l-made { background: var(--green); } .legend .l-missed { background: var(--red); } .legend .l-today { background: var(--gold-hi); }
+
+footer { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+footer .ghost { background: rgb(7 11 31 / .55); }
+
+/* PIN pad */
+dialog {
+  border: 0; padding: 24px 20px calc(20px + env(safe-area-inset-bottom)); width: min(360px, calc(100vw - 32px));
+  border-radius: 24px; background: #121740; color: var(--text); text-align: center;
+  box-shadow: 0 24px 60px rgb(0 0 0 / .5), inset 0 0 0 1px var(--line);
+}
+dialog::backdrop { background: rgb(4 6 18 / .78); }
+dialog h2 { font-size: 1.25rem; font-weight: 600; overflow-wrap: anywhere; }
+.dots { display: flex; justify-content: center; gap: 16px; margin: 18px 0 8px; }
+.dots i { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--soft); }
+.dots i.on { background: var(--gold); border-color: var(--gold); }
+.dots.wrong { animation: shake .4s; }
+.pinmsg { min-height: 1.5em; color: var(--red-text); font-size: .9375rem; }
+.keys { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 8px; }
+.keys button { min-height: 62px; border: 0; border-radius: 16px; font-size: 1.5rem; font-weight: 500; background: rgb(190 198 255 / .12); }
+.keys button.word { font-size: 1rem; background: transparent; color: var(--soft); }
+.keys button:hover { background: rgb(190 198 255 / .2); }
+.keys button:active { background: var(--gold); color: var(--ink); }
+@keyframes shake { 20%, 60% { transform: translateX(-8px); } 40%, 80% { transform: translateX(8px); } }
+
+/* Toasts */
+#toasts { position: fixed; z-index: 20; left: 16px; right: 16px; bottom: calc(18px + env(safe-area-inset-bottom)); display: grid; gap: 10px; justify-items: center; pointer-events: none; }
+.toast { max-width: 440px; padding: 14px 20px; border-radius: 16px; background: #fff3dc; color: #221704; font-weight: 600; box-shadow: 0 12px 34px rgb(0 0 0 / .45); animation: rise .45s var(--ease); transition: opacity .3s, transform .3s; overflow-wrap: anywhere; }
+.toast.bad { background: #ffd9de; color: #480914; }
+.toast.out { opacity: 0; transform: translateY(8px); }
+@keyframes rise { from { transform: translateY(24px); opacity: .2; } }
+#confetti { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 15; }
+
+@media (min-width: 900px) {
+  main { max-width: 960px; grid-template-columns: 1fr 1fr; column-gap: 48px; align-items: start; padding-top: 28px; }
+  .topline, .final, .grids, footer, #notice { grid-column: 1 / -1; }
+  .status { grid-column: 1; grid-row: 2; }
+  .checkins { grid-column: 1; grid-row: 3; }
+  .score { grid-column: 2; grid-row: 2 / span 2; }
+  .wide .status, .wide .score, .wide .checkins { grid-row: auto; grid-column: 1 / -1; width: 100%; max-width: 560px; justify-self: center; }
+  .grids { grid-template-columns: 1fr 1fr; column-gap: 48px; }
+  .legend { grid-column: 1 / -1; }
+  .points { font-size: 6rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+<div class="sky" aria-hidden="true"></div>
+<header class="stakes">Loser buys Dave's Hot Chicken 🍗🌶️</header>
+
+<main id="main">
+  <div class="topline">
+    <h1>40 Days of Fajr</h1>
+    <span class="sync" id="sync" role="status">Connecting</span>
+  </div>
+
+  <section class="card" id="notice" hidden>
+    <h2 id="noticeTitle"></h2>
+    <p id="noticeText"></p>
+  </section>
+
+  <section class="card final" id="final" hidden>
+    <h2 id="finalTitle"></h2>
+    <p id="finalText"></p>
+  </section>
+
+  <section class="status" id="status" aria-label="Check-in window">
+    <svg class="arc" viewBox="0 0 320 104" aria-hidden="true">
+      <defs>
+        <clipPath id="above"><rect x="-20" y="-30" width="360" height="110"/></clipPath>
+        <radialGradient id="sunfill"><stop offset="0" stop-color="#fff4d6"/><stop offset="1" stop-color="#f2bd5b"/></radialGradient>
+      </defs>
+      <path d="M40 80Q160 -44 280 80" fill="none" stroke="#bec6ff" stroke-opacity=".28" stroke-width="2" stroke-dasharray="2 6" stroke-linecap="round"/>
+      <path id="trail" d="M40 80Q160 -44 280 80" pathLength="100" fill="none" stroke="#f2bd5b" stroke-width="3" stroke-dasharray="0 200"/>
+      <g clip-path="url(#above)"><g id="sun"><circle r="22" fill="#f2bd5b" opacity=".2"/><circle r="12" fill="url(#sunfill)"/></g></g>
+      <line x1="0" y1="80" x2="320" y2="80" stroke="#bec6ff" stroke-opacity=".4" stroke-width="1.5"/>
+      <text id="openLabel" x="40" y="99" text-anchor="middle"></text>
+      <text id="closeLabel" x="280" y="99" text-anchor="middle"></text>
+    </svg>
+    <p id="statusText">Loading</p>
+    <p class="daycount" id="dayCount"></p>
+  </section>
+
+  <section class="checkins" id="checkins" aria-label="Today's check-in" hidden>
+    <div class="card" id="whoCard" hidden>
+      <h2>Who's using this device?</h2>
+      <p>Enter your PIN once. This device stays signed in.</p>
+      <div class="choices" id="whoChoices"></div>
+    </div>
+    <div class="card" id="setupCard" hidden>
+      <h2 id="setupTitle"></h2>
+      <p>You can change these until Day 1 begins.</p>
+      <form id="setupForm">
+        <label>Start date (Day 1)<input type="date" id="setupDate" required></label>
+        <label>Player one<input id="setupZayd" maxlength="20" autocomplete="off" required></label>
+        <label>Player two<input id="setupOmar" maxlength="20" autocomplete="off" required></label>
+        <button class="primary" id="setupSave" type="submit">Save</button>
+        <button class="ghost" id="setupCancel" type="button">Cancel</button>
+      </form>
+    </div>
+    <div id="slots" style="display:grid;gap:12px"></div>
+    <p class="note bad" id="offlineNote" hidden></p>
+  </section>
+
+  <section class="score" id="score" aria-label="Scoreboard" hidden>
+    <p class="leader" id="leader"></p>
+    <div class="board" id="board"></div>
+  </section>
+
+  <section class="grids" id="grids" aria-label="40-day grid" hidden>
+    <div class="legend" id="legend">
+      <span><i class="l-made"></i>Made it</span><span><i class="l-missed"></i>Missed</span>
+      <span><i></i>Upcoming</span><span><i class="l-today"></i>Today</span>
+    </div>
+  </section>
+
+  <footer>
+    <button class="ghost" id="switchBtn" type="button" hidden></button>
+    <button class="ghost" id="editBtn" type="button" hidden>Edit start date or names</button>
+  </footer>
+</main>
+
+<dialog id="pinDialog" aria-labelledby="pinTitle">
+  <h2 id="pinTitle"></h2>
+  <div class="dots" id="pinDots" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  <p class="pinmsg" id="pinMsg" role="status"></p>
+  <div class="keys" id="pinKeys"></div>
+</dialog>
+<div id="toasts" role="status" aria-live="polite"></div>
+<canvas id="confetti" aria-hidden="true"></canvas>
+
+<script type="module">
+/* ╔══════════════════════════════════════════════════════════════════╗
+   ║  FIREBASE_CONFIG: leave these placeholders alone.                ║
+   ║  GitHub Actions fills them in at deploy time from the repository ║
+   ║  secret named FIREBASE_CONFIG. Don't commit real values here.    ║
+   ╚══════════════════════════════════════════════════════════════════╝ */
+const FIREBASE_CONFIG = {
+  apiKey: "PASTE_YOUR_API_KEY",
+  authDomain: "PASTE_YOUR_PROJECT.firebaseapp.com",
+  projectId: "PASTE_YOUR_PROJECT_ID",
+  storageBucket: "PASTE_YOUR_PROJECT.firebasestorage.app",
+  messagingSenderId: "PASTE_YOUR_SENDER_ID",
+  appId: "PASTE_YOUR_APP_ID"
+};
+
+/* ===== CONTEST CONFIG ===== */
+const WINDOW_START = "05:15";   // Los Angeles time. If you change these two,
+const WINDOW_END   = "06:40";   // also change windowStart()/windowEnd() in the Firestore rules.
+const START_DATE   = "";        // "YYYY-MM-DD". Blank = tomorrow. Only prefills the setup screen.
+const PLAYERS = {               // No PINs here. Firebase Authentication checks them.
+  zayd: { name: "Zayd", login: "zayd@fajr40.example.com" },
+  omar: { name: "Omar", login: "omar@fajr40.example.com" }
+};
+const PIN_SUFFIX = "-fajr40";   // Not a secret. Firebase needs 6+ characters, so the password is PIN + this.
+/* ===== END CONFIG ===== */
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+import { getFirestore, doc, onSnapshot, setDoc, updateDoc, serverTimestamp, FieldPath }
+  from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+import { getAuth, initializeAuth, inMemoryPersistence, onAuthStateChanged, signInWithEmailAndPassword, signOut }
+  from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+
+window.__fajrLoaded = true;
+
+const TZ = "America/Los_Angeles";
+const TOTAL_DAYS = 40;
+const UNDO_MS = 5 * 60 * 1000;
+const IDS = ["zayd", "omar"];
+const $ = (id) => document.getElementById(id);
+
+/* ---------- Los Angeles time ---------- */
+const partsFormat = new Intl.DateTimeFormat("en-US", {
+  timeZone: TZ, hourCycle: "h23", year: "numeric", month: "2-digit", day: "2-digit",
+  hour: "2-digit", minute: "2-digit", second: "2-digit"
+});
+const timeFormat = new Intl.DateTimeFormat("en-US", { timeZone: TZ, hour: "numeric", minute: "2-digit" });
+const dayFormat = new Intl.DateTimeFormat("en-US", { timeZone: "UTC", weekday: "short", month: "short", day: "numeric" });
+
+function laParts(ms) {
+  const p = {};
+  for (const { type, value } of partsFormat.formatToParts(ms)) p[type] = value;
+  return p;
+}
+const laKey = (ms) => { const p = laParts(ms); return `${p.year}-${p.month}-${p.day}`; };
+const keyToUTC = (key) => { const [y, m, d] = key.split("-").map(Number); return Date.UTC(y, m - 1, d); };
+const addDays = (key, n) => new Date(keyToUTC(key) + n * 86400000).toISOString().slice(0, 10);
+const dayDiff = (a, b) => Math.round((keyToUTC(a) - keyToUTC(b)) / 86400000);
+
+// The real instant at which a Los Angeles wall clock reads hm ("05:15") on a date.
+function laInstant(key, hm) {
+  const [h, m] = hm.split(":").map(Number);
+  const target = keyToUTC(key) + (h * 60 + m) * 60000;
+  let guess = target;
+  for (let i = 0; i < 2; i++) {
+    const p = laParts(guess);
+    guess += target - Date.UTC(p.year, p.month - 1, p.day, p.hour, p.minute, p.second);
+  }
+  return guess;
+}
+
+const label12 = (hm) => {
+  const [h, m] = hm.split(":").map(Number);
+  return `${h % 12 || 12}:${String(m).padStart(2, "0")} ${h < 12 ? "AM" : "PM"}`;
+};
+const prettyDay = (key) => dayFormat.format(keyToUTC(key));
+
+function longSpan(ms) {
+  if (ms < 60000) return `${Math.max(1, Math.ceil(ms / 1000))} sec`;
+  const min = Math.ceil(ms / 60000);
+  if (min < 60) return `${min} min`;
+  const h = Math.floor(min / 60);
+  return h < 24 ? `${h}h ${min % 60}m` : `${Math.floor(h / 24)}d ${h % 24}h`;
+}
+function clockSpan(ms) {
+  const s = Math.max(0, Math.ceil(ms / 1000));
+  const two = (n) => String(n).padStart(2, "0");
+  const d = Math.floor(s / 86400);
+  const clock = `${two(Math.floor(s % 86400 / 3600))}:${two(Math.floor(s % 3600 / 60))}:${two(s % 60)}`;
+  return d ? `${d}d ${clock}` : clock;
+}
+
+/* ---------- State ---------- */
+let contest = null;          // last server-confirmed contest document
+let loaded = false;          // heard from the server at least once
+let online = false;
+let broken = "";            // set when Firestore refuses the connection
+let editing = false;
+let celebrated = false;
+let me = null;               // who is signed in on this device (Firebase remembers the login)
+let authReady = false;
+const saving = { zayd: false, omar: false };
+
+const nameOf = (id) => contest?.players?.[id] || PLAYERS[id].name;
+const otherOf = (id) => (id === "zayd" ? "omar" : "zayd");
+const entryOf = (id, key) => contest?.checkins?.[key]?.[id];
+const isDone = (id, key) => entryOf(id, key)?.done === true;
+const stampOf = (id, key) => entryOf(id, key)?.timestamp?.toMillis?.() ?? 0;
+
+function timeline(now) {
+  const today = laKey(now);
+  const openAt = laInstant(today, WINDOW_START);
+  const closeAt = laInstant(today, WINDOW_END);
+  const t = { now, today, openAt, closeAt, start: contest?.startDate ?? null, phase: "none" };
+  if (!t.start) return t;
+  t.day = dayDiff(today, t.start) + 1;
+  if (t.day < 1) { t.phase = "upcoming"; t.nextOpen = laInstant(t.start, WINDOW_START); }
+  else if (t.day > TOTAL_DAYS || (t.day === TOTAL_DAYS && now >= closeAt)) t.phase = "finished";
+  else if (now < openAt) { t.phase = "before"; t.nextOpen = openAt; }
+  else if (now < closeAt) t.phase = "open";
+  else { t.phase = "after"; t.nextOpen = laInstant(addDays(today, 1), WINDOW_START); }
+  return t;
+}
+
+// made | missed | today | upcoming. "Missed" is computed, so it needs no app open at 6:40.
+function dayState(id, n, t) {
+  if (isDone(id, addDays(t.start, n - 1))) return "made";
+  if (n < t.day || (n === t.day && t.now >= t.closeAt)) return "missed";
+  return n === t.day ? "today" : "upcoming";
+}
+
+function statsFor(id, t) {
+  let score = 0, run = 0, longest = 0;
+  for (let n = 1; n <= TOTAL_DAYS; n++) {
+    const s = dayState(id, n, t);
+    if (s === "made") { score++; run++; longest = Math.max(longest, run); }
+    else if (s === "missed") run = 0;
+    else break;
+  }
+  return { score, current: run, longest };
+}
+
+/* ---------- Small DOM helpers ---------- */
+function el(tag, className, text) {
+  const node = document.createElement(tag);
+  if (className) node.className = className;
+  if (text !== undefined) node.textContent = text;
+  return node;
+}
+const setText = (node, text) => { if (node.textContent !== text) node.textContent = text; };
+
+function mark(kind) {
+  const ns = "http://www.w3.org/2000/svg";
+  const svg = document.createElementNS(ns, "svg");
+  svg.setAttribute("viewBox", "0 0 34 34");
+  svg.setAttribute("aria-hidden", "true");
+  const circle = document.createElementNS(ns, "circle");
+  circle.setAttribute("cx", "17"); circle.setAttribute("cy", "17"); circle.setAttribute("r", "17");
+  circle.setAttribute("fill", kind === "made" ? "#45cf93" : "#c4415a");
+  const path = document.createElementNS(ns, "path");
+  path.setAttribute("d", kind === "made" ? "M10 17.5l5 5 9.5-10.5" : "M11.5 11.5l11 11m0-11l-11 11");
+  path.setAttribute("fill", "none");
+  path.setAttribute("stroke", kind === "made" ? "#04241a" : "#fff");
+  path.setAttribute("stroke-width", "3.2");
+  path.setAttribute("stroke-linecap", "round"); path.setAttribute("stroke-linejoin", "round");
+  svg.append(circle, path);
+  return svg;
+}
+
+function toast(text, bad = false) {
+  const node = el("div", bad ? "toast bad" : "toast", text);
+  $("toasts").append(node);
+  setTimeout(() => { node.classList.add("out"); setTimeout(() => node.remove(), 350); }, bad ? 8000 : 6000);
+}
+
+/* ---------- Build the static pieces once ---------- */
+const ui = {};
+for (const id of IDS) {
+  const u = ui[id] = {};
+
+  // Check-in slot: a button plus a result panel, only one visible at a time.
+  u.slot = el("div", "slot");
+  u.button = el("button", "big"); u.button.type = "button";
+  u.buttonText = el("span"); u.buttonSub = el("small");
+  u.button.append(u.buttonText, u.buttonSub);
+  u.button.addEventListener("click", () => checkIn(id));
+  u.result = el("div", "result");
+  u.iconBox = el("i"); u.iconBox.style.display = "contents";
+  const words = el("div");
+  u.resultTitle = el("strong"); u.resultSub = el("span");
+  words.append(u.resultTitle, u.resultSub);
+  u.undo = el("button", "ghost"); u.undo.type = "button";
+  u.undo.addEventListener("click", () => undo(id));
+  u.result.append(u.iconBox, words, u.undo);
+  u.slot.append(u.button, u.result);
+  $("slots").append(u.slot);
+
+  // Identity choice
+  u.choice = el("button", "", PLAYERS[id].name); u.choice.type = "button";
+  u.choice.addEventListener("click", () => identify(id));
+  $("whoChoices").append(u.choice);
+
+  // Scoreboard side
+  u.side = el("div", "side");
+  u.sideName = el("h2"); u.points = el("p", "points");
+  const dl = el("dl");
+  const row = (label) => { const d = el("div"), v = el("dd"); d.append(el("dt", "", label), v); dl.append(d); return v; };
+  u.current = row("Streak"); u.longest = row("Longest");
+  u.side.append(u.sideName, u.points, el("p", "outof", `of ${TOTAL_DAYS}`), dl);
+  $("board").append(u.side);
+
+  // Grid
+  const block = el("div");
+  u.gridName = el("h2");
+  const list = el("ol", "grid");
+  u.cells = [];
+  for (let n = 1; n <= TOTAL_DAYS; n++) {
+    const li = el("li", "cell"), num = el("span", "", String(n));
+    num.setAttribute("aria-hidden", "true");
+    li.append(num); list.append(li); u.cells.push(li);
+  }
+  block.append(u.gridName, list);
+  $("grids").insertBefore(block, $("legend"));
+}
+setText($("openLabel"), label12(WINDOW_START));
+setText($("closeLabel"), label12(WINDOW_END));
+
+/* ---------- Render ---------- */
+let lastSignature = "";
+
+function render() {
+  const t = timeline(Date.now());
+  const active = !!contest && t.phase !== "finished";
+
+  $("score").hidden = $("grids").hidden = !contest;
+  $("status").hidden = !!contest && t.phase === "finished";
+  $("final").hidden = t.phase !== "finished";
+  $("main").classList.toggle("wide", !contest || t.phase === "finished");
+  $("whoCard").hidden = !(loaded && authReady && !me && t.phase !== "finished");
+  $("setupCard").hidden = !(loaded && me && (!contest || editing));
+  $("slots").hidden = !active || editing;
+  $("checkins").hidden = $("whoCard").hidden && $("setupCard").hidden && $("slots").hidden;
+  $("editBtn").hidden = !(contest && me && t.phase === "upcoming" && !editing);
+  $("switchBtn").hidden = !me;
+  if (me) setText($("switchBtn"), `You're ${nameOf(me)}. Switch player`);
+
+  if (editing && t.phase !== "upcoming") editing = false;   // Day 1 began mid-edit
+
+  for (const id of IDS) {
+    setText(ui[id].choice, nameOf(id));
+    ui[id].slot.className = "slot " + (id === me ? "mine" : "other");
+    ui[id].slot.style.order = id === me ? "-1" : "0";
+  }
+  if (contest) { renderScores(t); renderGrids(t); }
+  if (t.phase === "finished") renderFinal(t);
+  lastSignature = `${t.phase}|${t.today}`;
+  tick();
+}
+
+function renderScores(t) {
+  const stats = {};
+  for (const id of IDS) {
+    const s = stats[id] = statsFor(id, t);
+    setText(ui[id].sideName, nameOf(id));
+    setText(ui[id].points, String(s.score));
+    setText(ui[id].current, plural(s.current));
+    setText(ui[id].longest, plural(s.longest));
+  }
+  const gap = stats.zayd.score - stats.omar.score;
+  ui.zayd.side.classList.toggle("ahead", gap > 0);
+  ui.omar.side.classList.toggle("ahead", gap < 0);
+  setText($("leader"),
+    t.phase === "upcoming" ? "Nobody has a lead yet" :
+    gap === 0 ? `Tied at ${stats.zayd.score}` :
+    `${nameOf(gap > 0 ? "zayd" : "omar")} ${t.phase === "finished" ? "won" : "leads"} by ${Math.abs(gap)}`);
+}
+const plural = (n) => `${n} ${n === 1 ? "day" : "days"}`;
+
+function renderGrids(t) {
+  const words = { made: "made it", missed: "missed", today: "today, not checked in yet", upcoming: "upcoming" };
+  for (const id of IDS) {
+    setText(ui[id].gridName, nameOf(id));
+    ui[id].cells.forEach((cell, i) => {
+      const n = i + 1, key = addDays(t.start, i), state = dayState(id, n, t);
+      cell.className = "cell " + (state === "today" ? "upcoming" : state) + (n === t.day ? " today" : "");
+      const at = state === "made" && stampOf(id, key) ? ` at ${timeFormat.format(stampOf(id, key))}` : "";
+      const label = `Day ${n}, ${prettyDay(key)}: ${words[state]}${at}`;
+      cell.title = label;
+      cell.setAttribute("aria-label", label);
+    });
+  }
+}
+
+function renderFinal(t) {
+  const a = statsFor("zayd", t).score, b = statsFor("omar", t).score;
+  if (a === b) {
+    setText($("finalTitle"), "Tie — split a Dave's combo.");
+    setText($("finalText"), `You both finished with ${a} of ${TOTAL_DAYS}.`);
+  } else {
+    const winner = a > b ? "zayd" : "omar", loser = otherOf(winner);
+    setText($("finalTitle"), `${nameOf(winner)} wins ${Math.max(a, b)} to ${Math.min(a, b)}`);
+    setText($("finalText"), `${nameOf(loser)} owes ${nameOf(winner)} Dave's Hot Chicken 🍗🌶️`);
+  }
+  if (!celebrated) { celebrated = true; confetti(); }
+}
+
+// Runs every second. Only touches text that depends on the clock.
+function tick() {
+  const t = timeline(Date.now());
+  if (contest && `${t.phase}|${t.today}` !== lastSignature) return render();
+
+  const span = t.closeAt - t.openAt;
+  const progress = Math.min(1, Math.max(0, (t.now - t.openAt) / span));
+  const open = t.phase === "open";
+  document.documentElement.style.setProperty("--dawn", open ? progress.toFixed(3) : t.now >= t.closeAt && t.phase === "after" ? ".5" : ".15");
+
+  // Sun on the arc (a quadratic curve from 40,80 over 160,-44 to 280,80)
+  const p = t.phase === "after" ? 1 : open ? progress : 0, q = 1 - p;
+  const x = q * q * 40 + 2 * q * p * 160 + p * p * 280;
+  const y = q * q * 80 + 2 * q * p * -44 + p * p * 80;
+  $("sun").style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px)`;
+  $("sun").style.opacity = open ? "1" : ".55";
+  $("trail").setAttribute("stroke-dasharray", `${open ? arcShare(p) : 0} 200`);
+
+  $("statusText").classList.toggle("open", open);
+  setText($("statusText"),
+    broken ? broken :
+    !loaded ? "Loading the contest" :
+    !contest ? "Contest not started yet" :
+    open ? `Window open — closes in ${longSpan(t.closeAt - t.now)}` :
+    t.phase === "finished" ? "Contest finished" :
+    `Opens in ${longSpan(t.nextOpen - t.now)}`);
+  setText($("dayCount"),
+    !contest ? `Check in ${label12(WINDOW_START)} to ${label12(WINDOW_END)}, Los Angeles time` :
+    t.phase === "upcoming" ? `Day 1 is ${prettyDay(t.start)}` :
+    t.day === TOTAL_DAYS ? `Day ${TOTAL_DAYS} of ${TOTAL_DAYS}, the last one` :
+    t.day < TOTAL_DAYS ? `Day ${t.day} of ${TOTAL_DAYS}, ${TOTAL_DAYS - t.day} ${TOTAL_DAYS - t.day === 1 ? "day" : "days"} left` : "");
+
+  if (contest && t.phase !== "finished") for (const id of IDS) tickSlot(id, t, open);
+
+  const stuck = IDS.some((id) => saving[id]) && !online;
+  $("offlineNote").hidden = !stuck;
+  if (stuck) setText($("offlineNote"), "No connection. This isn't saved yet, so keep the page open.");
+}
+
+// Share of the curve's length covered at parameter p (numeric, close enough for a trail)
+function arcShare(p) {
+  let total = 0, part = 0, px = 40, py = 80;
+  for (let i = 1; i <= 60; i++) {
+    const s = i / 60, r = 1 - s;
+    const x = r * r * 40 + 2 * r * s * 160 + s * s * 280, y = r * r * 80 + 2 * r * s * -44 + s * s * 80;
+    const d = Math.hypot(x - px, y - py);
+    total += d; if (s <= p) part += d; px = x; py = y;
+  }
+  return (part / total * 100).toFixed(2);
+}
+
+function tickSlot(id, t, open) {
+  const u = ui[id], mine = id === me;
+  const inContest = t.day >= 1;
+  const done = inContest && isDone(id, t.today);
+  const missed = t.phase === "after" && !done;
+
+  // Result panel replaces the button once today is settled for this player.
+  u.result.hidden = !(done || missed) || saving[id];
+  u.button.hidden = !u.result.hidden;
+  if (!u.result.hidden) {
+    const kind = done ? "made" : "missed";
+    u.result.classList.toggle("made", done);
+    if (u.iconBox.dataset.kind !== kind) { u.iconBox.dataset.kind = kind; u.iconBox.replaceChildren(mark(kind)); }
+    setText(u.resultTitle, done
+      ? (mine ? "You made it" : `${nameOf(id)} made it`)
+      : (mine ? "You missed today" : `${nameOf(id)} missed today`));
+    const next = t.nextOpen && t.day < TOTAL_DAYS ? `Next check-in in ${clockSpan(t.nextOpen - t.now)}` : "";
+    setText(u.resultSub, done ? `at ${timeFormat.format(stampOf(id, t.today))}${next && mine ? `. ${next}` : ""}` : next);
+    const undoLeft = done && open ? Math.min(stampOf(id, t.today) + UNDO_MS, t.closeAt) - t.now : 0;
+    u.undo.hidden = !(undoLeft > 0);
+    if (undoLeft > 0) setText(u.undo, `Undo ${clockSpan(Math.min(undoLeft, UNDO_MS)).slice(4)}`);
+    return;
+  }
+
+  u.button.disabled = !open || saving[id];
+  if (saving[id]) { setText(u.buttonText, "Saving"); setText(u.buttonSub, mine ? "" : nameOf(id)); }
+  else if (open) {
+    setText(u.buttonText, "I prayed Fajr at the masjid ✅");
+    setText(u.buttonSub, mine ? "" : `${nameOf(id)} only, needs ${nameOf(id)}'s PIN`);
+  } else {
+    setText(u.buttonText, clockSpan(t.nextOpen - t.now));
+    setText(u.buttonSub, mine ? "Your check-in opens in" : `${nameOf(id)}'s check-in opens in`);
+  }
+}
+
+/* ---------- PIN pad ---------- */
+const pin = { value: "", verify: null, resolve: null, busy: false };
+
+for (const k of ["1", "2", "3", "4", "5", "6", "7", "8", "9", "Cancel", "0", "Delete"]) {
+  const b = el("button", k.length > 1 ? "word" : "", k);
+  b.type = "button";
+  b.addEventListener("click", () => k === "Cancel" ? closePin(false) : k === "Delete" ? pinBack() : pinDigit(k));
+  $("pinKeys").append(b);
+}
+$("pinDialog").addEventListener("cancel", (e) => { e.preventDefault(); closePin(false); });
+$("pinDialog").addEventListener("keydown", (e) => {
+  if (/^\d$/.test(e.key)) { e.preventDefault(); pinDigit(e.key); }
+  else if (e.key === "Backspace") { e.preventDefault(); pinBack(); }
+});
+
+// Resolves true once verify(pin) succeeds, false if cancelled.
+function askPin(id, verify) {
+  if (pin.resolve) return Promise.resolve(false);
+  pin.value = ""; pin.verify = verify; pin.busy = false;
+  setText($("pinTitle"), `Enter ${nameOf(id)}'s PIN`);
+  setText($("pinMsg"), "");
+  drawDots();
+  $("pinDialog").showModal();
+  return new Promise((resolve) => { pin.resolve = resolve; });
+}
+function closePin(ok) {
+  $("pinDialog").close();
+  const done = pin.resolve; pin.resolve = null;
+  done?.(ok);
+}
+function drawDots() { [...$("pinDots").children].forEach((d, i) => d.classList.toggle("on", i < pin.value.length)); }
+function pinBack() { if (pin.busy) return; pin.value = pin.value.slice(0, -1); drawDots(); }
+async function pinDigit(d) {
+  if (pin.busy || pin.value.length >= 4) return;
+  pin.value += d;
+  $("pinDots").classList.remove("wrong");
+  setText($("pinMsg"), "");
+  drawDots();
+  if (pin.value.length < 4) return;
+  const attempt = pin.resolve;
+  pin.busy = true;
+  setText($("pinMsg"), "Checking");
+  let problem = "";
+  try { await pin.verify(pin.value); }
+  catch (err) { console.error(err.code || err); problem = loginProblem(err.code); }
+  if (pin.resolve !== attempt) return;   // cancelled while checking
+  pin.busy = false;
+  if (!problem) return closePin(true);
+  pin.value = ""; drawDots();
+  $("pinDots").classList.add("wrong");
+  setText($("pinMsg"), problem);
+}
+function loginProblem(code) {
+  if (["auth/invalid-credential", "auth/wrong-password", "auth/user-not-found", "auth/invalid-login-credentials"].includes(code))
+    return "That PIN doesn't match. Try again.";
+  if (code === "auth/too-many-requests") return "Too many tries. Wait a few minutes.";
+  if (code === "auth/network-request-failed") return "No connection. Try again.";
+  if (code === "auth/operation-not-allowed" || code === "auth/configuration-not-found")
+    return "Turn on Email/Password sign-in in Firebase.";
+  return "Couldn't sign in. Try again.";
+}
+
+/* ---------- Logins ---------- */
+let auth = null, guestAuth = null, guestRef = null;
+
+const signIn = (on, id, digits) => signInWithEmailAndPassword(on, PLAYERS[id].login, digits + PIN_SUFFIX);
+
+// The other player can check in on this device without replacing its owner's login.
+async function withLogin(id, action) {
+  if (id === me) return action(contestRef);
+  if (!guestAuth) {
+    const app = initializeApp(FIREBASE_CONFIG, "guest");
+    guestAuth = initializeAuth(app, { persistence: inMemoryPersistence });
+    guestRef = doc(getFirestore(app), "contests", "fajr40");
+  }
+  let cancelled = false;
+  const ok = await askPin(id, async (digits) => {
+    await signIn(guestAuth, id, digits);
+    if (cancelled) await signOut(guestAuth);
+  });
+  if (!ok) { cancelled = true; await signOut(guestAuth).catch(() => {}); return; }
+  try { await action(guestRef); } finally { await signOut(guestAuth).catch(() => {}); }
+}
+
+/* ---------- Actions ---------- */
+async function identify(id) {
+  let cancelled = false;
+  const ok = await askPin(id, async (digits) => {
+    await signIn(auth, id, digits);
+    if (cancelled) await signOut(auth);
+  });
+  if (!ok) cancelled = true;   // onAuthStateChanged takes it from here
+}
+
+$("switchBtn").addEventListener("click", async () => {
+  editing = false;
+  await signOut(auth);
+  $("whoCard").scrollIntoView({ block: "center" });
+});
+
+function checkIn(id) {
+  if (saving[id]) return;
+  return withLogin(id, async (ref) => {
+    const t = timeline(Date.now());   // re-check: the PIN pad may have been open across 6:40
+    if (t.phase !== "open") return toast("The check-in window is closed.", true);
+    if (isDone(id, t.today)) return;
+    if (await writeEntry(ref, id, t.today, true)) {
+      confetti();
+      navigator.vibrate?.(60);
+    }
+  });
+}
+
+function undo(id) {
+  if (saving[id]) return;
+  return withLogin(id, async (ref) => {
+    const t = timeline(Date.now());
+    const limit = Math.min(stampOf(id, t.today) + UNDO_MS, t.closeAt);
+    if (t.phase !== "open" || !isDone(id, t.today) || t.now >= limit) return toast("It's too late to undo.", true);
+    if (await writeEntry(ref, id, t.today, false)) toast("Check-in undone.");
+  });
+}
+
+async function writeEntry(ref, id, key, done) {
+  saving[id] = true; tick();
+  try {
+    await updateDoc(ref, new FieldPath("checkins", key, id), { done, timestamp: serverTimestamp() });
+    // Stay in "Saving" until the confirmed snapshot lands, so the button never flashes back.
+    for (let i = 0; i < 30 && isDone(id, key) !== done; i++) await new Promise((r) => setTimeout(r, 100));
+    return true;
+  } catch (err) {
+    console.error(err);
+    toast(err.code === "permission-denied"
+      ? "Not saved. Firestore only accepts check-ins during the window. Check your phone's clock, and that the rules are published."
+      : "Not saved. Check your connection and try again.", true);
+    return false;
+  } finally {
+    saving[id] = false; render();
+  }
+}
+
+/* ---------- Setup ---------- */
+function earliestStart() {
+  const now = Date.now(), today = laKey(now);
+  return now < laInstant(today, WINDOW_END) ? today : addDays(today, 1);
+}
+function openSetup() {
+  const min = earliestStart();
+  const wanted = contest?.startDate || START_DATE || addDays(laKey(Date.now()), 1);
+  $("setupDate").min = min;
+  $("setupDate").value = wanted < min ? min : wanted;
+  $("setupZayd").value = nameOf("zayd");
+  $("setupOmar").value = nameOf("omar");
+  setText($("setupTitle"), contest ? "Edit the contest" : "Set up the contest");
+  setText($("setupSave"), contest ? "Save changes" : "Start the contest");
+  $("setupCancel").hidden = !contest;
+}
+$("editBtn").addEventListener("click", () => { editing = true; openSetup(); render(); $("setupCard").scrollIntoView({ block: "center" }); });
+$("setupCancel").addEventListener("click", () => { editing = false; render(); });
+$("setupForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const startDate = $("setupDate").value;
+  const players = { zayd: $("setupZayd").value.trim(), omar: $("setupOmar").value.trim() };
+  if (!startDate || startDate < earliestStart()) return toast("Pick a start date that hasn't passed.", true);
+  if (!players.zayd || !players.omar) return toast("Both players need a name.", true);
+  $("setupSave").disabled = true;
+  try {
+    if (contest) await updateDoc(contestRef, { startDate, players });
+    else await setDoc(contestRef, { startDate, players, checkins: {} });
+    editing = false;
+    toast(`Saved. Day 1 is ${prettyDay(startDate)}.`);
+  } catch (err) {
+    console.error(err);
+    toast(err.code === "permission-denied"
+      ? "Not saved. Publish the Firestore rules, and note that the start date locks once Day 1 begins."
+      : "Not saved. Check your connection and try again.", true);
+  } finally {
+    $("setupSave").disabled = false; render();
+  }
+});
+
+/* ---------- Confetti ---------- */
+function confetti() {
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const canvas = $("confetti"), g = canvas.getContext("2d");
+  const w = canvas.width = innerWidth, h = canvas.height = innerHeight;
+  const colors = ["#f2bd5b", "#ffd88a", "#ff9c6b", "#45cf93", "#f4f1ea"];
+  const bits = Array.from({ length: 110 }, () => ({
+    x: w / 2 + (Math.random() - .5) * 160, y: h * .55,
+    vx: (Math.random() - .5) * 11, vy: -7 - Math.random() * 10,
+    s: 5 + Math.random() * 7, a: Math.random() * 6, va: (Math.random() - .5) * .3,
+    c: colors[Math.floor(Math.random() * colors.length)]
+  }));
+  const begin = performance.now();
+  let last = begin;
+  requestAnimationFrame(function frame(now) {
+    const dt = Math.min(3, (now - last) / 16.7); last = now;
+    const life = 1 - (now - begin) / 2200;
+    g.clearRect(0, 0, w, h);
+    if (life <= 0) return;
+    g.globalAlpha = Math.min(1, life * 2.5);
+    for (const b of bits) {
+      b.vy += .32 * dt; b.vx *= 1 - .012 * dt; b.x += b.vx * dt; b.y += b.vy * dt; b.a += b.va * dt;
+      g.save(); g.translate(b.x, b.y); g.rotate(b.a); g.fillStyle = b.c;
+      g.fillRect(-b.s / 2, -b.s / 4, b.s, b.s / 2); g.restore();
+    }
+    requestAnimationFrame(frame);
+  });
+}
+
+/* ---------- Firestore ---------- */
+function notice(title, text) {
+  $("notice").hidden = !title;
+  setText($("noticeTitle"), title || ""); setText($("noticeText"), text || "");
+}
+function setSync(state, text) { $("sync").className = `sync ${state}`; setText($("sync"), text); }
+
+// Compare two confirmed snapshots and announce what the other person just did.
+function announce(before, after) {
+  const key = laKey(Date.now());
+  for (const id of IDS) {
+    if (id === me) continue;
+    const was = before.checkins?.[key]?.[id], is = after.checkins?.[key]?.[id];
+    if (is?.done === true && was?.done !== true) {
+      const ms = is.timestamp?.toMillis?.() ?? Date.now();
+      const just = Date.now() - ms < 120000 ? "just " : "";
+      toast(`🔥 ${nameOf(id)} ${just}checked in at ${timeFormat.format(ms)}`);
+    } else if (was?.done === true && is?.done !== true) {
+      toast(`${nameOf(id)} undid today's check-in`);
+    }
+  }
+}
+
+let contestRef = null;
+
+function connect() {
+  if (Object.values(FIREBASE_CONFIG).some((v) => String(v).includes("PASTE_YOUR"))) {
+    setSync("down", "Not connected");
+    $("status").hidden = true;
+    notice("Firebase config is missing", "Add the FIREBASE_CONFIG secret in the GitHub repo settings, then run the deploy workflow again.");
+    return;
+  }
+  const app = initializeApp(FIREBASE_CONFIG);
+  contestRef = doc(getFirestore(app), "contests", "fajr40");
+  auth = getAuth(app);
+  onAuthStateChanged(auth, (user) => {
+    authReady = true;
+    me = IDS.find((id) => PLAYERS[id].login === user?.email) ?? null;
+    if (me && !contest) openSetup();
+    render();
+  });
+
+  onSnapshot(contestRef, { includeMetadataChanges: true }, (snap) => {
+    const { fromCache, hasPendingWrites } = snap.metadata;
+    online = !fromCache;
+    setSync(online ? "live" : "down", online ? "Live" : loaded ? "Reconnecting" : "Connecting");
+    if (fromCache || hasPendingWrites) return tick();   // only ever show what the server confirmed
+    const before = contest, first = !loaded;
+    contest = snap.exists() ? snap.data() : null;
+    loaded = true;
+    notice("");
+    if (!contest && first) openSetup();
+    if (!first && before && contest) announce(before, contest);
+    render();
+  }, (err) => {
+    console.error(err);
+    online = false;
+    setSync("down", "Not connected");
+    broken = "Can't reach the contest";
+    notice("Firestore refused the connection", err.code === "permission-denied"
+      ? "Publish the security rules in the Firebase console, then reload this page."
+      : `Check the config and that Firestore is enabled, then reload. (${err.code})`);
+    tick();
+  });
+
+  setInterval(tick, 1000);
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) render(); });
+  render();
+}
+connect();
+</script>
+<script>
+  // If the Firebase modules can't be downloaded, say so instead of hanging on "Loading".
+  setTimeout(function () {
+    if (window.__fajrLoaded) return;
+    document.getElementById("statusText").textContent = "Couldn't load Firebase. Check your connection and reload.";
+    document.getElementById("sync").textContent = "Offline";
+    document.getElementById("sync").className = "sync down";
+  }, 10000);
+</script>
+</body>
+</html>
